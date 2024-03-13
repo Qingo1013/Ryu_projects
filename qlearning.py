@@ -29,6 +29,8 @@ class Q_Learning(object):
        self.Q_table = None
        self.org = src
        self.des = dst
+       print(self.network)
+       print(self._actions)
     #    self.build_Q_table()
     
     def _get_network(self, links):
@@ -146,6 +148,8 @@ class Q_Learning(object):
                 state_current = state_next  # move to next state  
     
                 step_counter += 1  
+                if step_counter >= 100:
+                    break
     
             if (episode % 10 == 0):  
                 print()  
