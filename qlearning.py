@@ -15,10 +15,12 @@ class Q_Learning(object):
     MAX_action_num = 0  # 因为不是全连接网络，因此我们取最大的  
 
     def __init__(self, swithes, links, src, dst):
-       self.network = self._get_network(links=links)     
+       self.network = {}
+       self._get_network(links=links)     
        self.Nodes = swithes  
        self._state_num = len(self.Nodes)    
-       self._actions = self.__get_actions()   
+        #    self._actions = 
+       self.__get_actions()   
        self.MAX_action_num = self._state_num
        self._epsilon = 0.9   # greedy police  
        self._learning_rate = 0.1     # learning rate  
