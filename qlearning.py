@@ -34,15 +34,13 @@ class Q_Learning(object):
     def _get_network(self, links):
         self.network={}
         for key, value in links.items():
-            print(key)
-            print(value)
             self.network[key]=value[1]
             
     def __get_actions(self):
         ac = {}
         for nd in self.Nodes:
             ac[nd]=[]
-        for key, _ in self.network:
+        for key, _ in self.network.items():
             ac[key[0]].append(key[1])  
         self._actions = ac 
 
