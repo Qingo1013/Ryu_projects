@@ -17,7 +17,7 @@ class Q_Learning(object):
     def __init__(self, swithes, links, src, dst):
        self.network = {}
        self._get_network(links=links)     
-       self.Nodes = swithes  
+       self.Nodes = sorted(swithes)  
        self._state_num = len(self.Nodes)    
         #    self._actions = 
        self.__get_actions()   
