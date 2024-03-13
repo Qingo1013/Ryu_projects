@@ -13,25 +13,27 @@ class Q_Learning(object):
     _state_num = 0
     _actions = {}      
     MAX_action_num = 0  # 因为不是全连接网络，因此我们取最大的  
-    _epsilon = 0.9   # greedy police  
-    _learning_rate = 0.1     # learning rate  
-    _discount_factor = 0.9    # discount factor  
-    MAX_EPISODES = 100   # maximum episodes  
-    Q_table = None
-    org = 0
-    des = 0
+
     def __init__(self, swithes, links, src, dst):
        self.network = self._get_network(links=links)     
        self.Nodes = swithes  
        self._state_num = len(self.Nodes)    
        self._actions = self.__get_actions()   
        self.MAX_action_num = self._state_num
+       self._epsilon = 0.9   # greedy police  
+       self._learning_rate = 0.1     # learning rate  
+       self._discount_factor = 0.9    # discount factor  
+       self.MAX_EPISODES = 100   # maximum episodes  
+       self.Q_table = None
        self.org = src
        self.des = dst
     #    self.build_Q_table()
     
     def _get_network(self, links):
+        self.network={}
         for key, value in links.items():
+            print(key)
+            print(value)
             self.network[key]=value[1]
             
     def __get_actions(self):
