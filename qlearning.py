@@ -61,8 +61,7 @@ class Q_Learning(object):
             index=self.Nodes  
         )
         for key, _ in self.network.items():
-            if key[1]==self.des:
-                self.Q_table.loc[key[0],key[1]]= 1
+            self.Q_table.loc[key[0],key[1]]= 1
         for i in self.Nodes:
             self.Q_table.loc[i,i] = 0
         print(self.Q_table)
