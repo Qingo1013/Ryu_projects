@@ -65,6 +65,7 @@ class Q_Learning(object):
                 self.Q_table.loc[key[0],key[1]]= 1
         for i in self.Nodes:
             self.Q_table.loc[i,i] = 0
+        print(self.Q_table)
 
     
     def choose_action(self,state_current):  
@@ -104,7 +105,9 @@ class Q_Learning(object):
         current_node = self.org  
         while current_node != self.des:  
             # 注意，这里一定要是loc，因为我们的node下标是从1开始的，所用用loc索引Index,但是这里返回的下标是从0开始的，错了1，因此我们要加1  
-            next_node = self.Q_table.loc[current_node, :].argmax() + 1  
+            next_node = self.Q_table.loc[current_node, :].argmax() + 1 
+            if current_node == next_node:
+                break 
             solution.append(next_node)  
             total_diatance += self.network[current_node, next_node]  
             current_node = next_node  

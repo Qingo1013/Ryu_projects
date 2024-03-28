@@ -179,4 +179,3 @@ if __name__ == "__main__":
     """ solve the problem with Q_table"""  
     solution, total_diatance = solve_SPP_with_Q_table(org, des, Q_table)  
     print('The solution is: {},   total_diatance: {}'.format(solution, total_diatance))  
-  

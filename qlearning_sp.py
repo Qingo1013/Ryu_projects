@@ -59,7 +59,7 @@ class Topo(object):
 
     def shortest_path(self,src_sw,dst_sw,first_port,last_port):
         self.logger.info("topo calculate the shortest path from ---{}-{}-------{}-{}".format(first_port,src_sw,dst_sw,last_port))
-        self.logger.debug("there is {} swithes".format(len(self.switches)))
+        self.logger.info("there is {} swithes".format(len(self.switches)))
         
         
         q = Q_Learning(self.switches, self.adjacent, src_sw, dst_sw)
@@ -457,7 +457,7 @@ class DijkstraController(app_manager.RyuApp):
             # say s1======s2 ,in ryu we have 
             # s1------>s2,s2----->s1
             # when enumerate all the links,the later one will overwrite the previous one.
-            weight=random.randint(1,5)
+            weight=1
 
             self.topo.set_adjacent(s1,s2,p1,weight)
             # self.topo.set_adjacent(s2,s1,p2,weight)
