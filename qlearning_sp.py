@@ -460,7 +460,7 @@ class DijkstraController(app_manager.RyuApp):
             weight=random.randint(1,5)
 
             self.topo.set_adjacent(s1,s2,p1,weight)
-            self.topo.set_adjacent(s2,s1,p2,weight)
+            # self.topo.set_adjacent(s2,s1,p2,weight)
 
             all_link_repr+='s{}p{}--s{}p{}\n'.format(s1,p1,s2,p2)
         self.logger.info("All links:\n "+all_link_repr)

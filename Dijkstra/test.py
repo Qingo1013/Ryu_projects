@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np  
   
 network = {(1,2): 15  
+        # ,(2,1):15
         ,(1,4): 25  
         ,(1,3): 45  
         ,(2,5): 30  
@@ -17,7 +18,8 @@ network = {(1,2): 15
         ,(6,7): 1  
        }  
 Nodes = [1, 2, 3, 4, 5, 6, 7]  
-  
+
+
 """  
 Gurobi得到的最优解：  
 45.0  
@@ -173,7 +175,7 @@ if __name__ == "__main__":
   
     Q_table = Q_learning_algo()  
     print('Final Q_table: \n', Q_table, end='\n\n')  
-  
+    
     """ solve the problem with Q_table"""  
     solution, total_diatance = solve_SPP_with_Q_table(org, des, Q_table)  
     print('The solution is: {},   total_diatance: {}'.format(solution, total_diatance))  

@@ -56,35 +56,46 @@ class Q_Learning(object):
         :return:  
         '''  
         self.Q_table = pd.DataFrame(  
-            np.zeros((self._state_num, self.MAX_action_num)),  
+            np.full((self._state_num, self.MAX_action_num),-1),  
             columns=self.Nodes,  
             index=self.Nodes  
-        )  
+        )
+        for key, _ in self.network.items():
+            if key[1]==self.des:
+                self.Q_table.loc[key[0],key[1]]= 1
+        for i in self.Nodes:
+            self.Q_table.loc[i,i] = 0
+
     
     def choose_action(self,state_current):  
         # This is how to choose an action  
         action = None  
         rand_num = np.random.uniform()  
-        candidate_actions = self._actions[state_current]  # 提取出下一个可以访问的节点  
+        # candidate_actions = self._actions[state_current]  # 提取出下一个可以访问的节点  
+        candidate_actions = self.Q_table.loc[state_current,:]
         if(rand_num > self._epsilon):   # act greedy  
-            action = np.random.choice(candidate_actions)  
+            action_list = candidate_actions[candidate_actions >= 0].index.to_list()
+            action = np.random.choice(action_list)  
         else:  # choose action with max Q-value  
-            max_Q_value = -np.inf  # 我们要选Q-value最大的  
-            for j in self.Nodes:  
-                if(self.Q_table.loc[state_current, j] > max_Q_value and j in candidate_actions):   # 注意用index索引的话，就需要用.loc  
-                    max_Q_value = self.Q_table.loc[state_current, j]  # 注意用index索引的话，就需要用.loc  
-                    action = j  
+            # max_Q_value = -np.inf  # 我们要选Q-value最大的  
+            # for j in self.Nodes:  
+            #     if(self.Q_table.loc[state_current, j] > max_Q_value and j in candidate_actions):   # 注意用index索引的话，就需要用.loc  
+            #         max_Q_value = self.Q_table.loc[state_current, j]  # 注意用index索引的话，就需要用.loc  
+            #         action = j  
+            action = candidate_actions.idxmax()
     
         return action  
   
     def get_env_feedback(self,state_current, action):  
         # This is how agent will interact with the environment  
-        arc = (state_current, action)  
-        max_length = max(list(self.network.values()))  
-        reward = max_length - self.network[arc]  # 奖励是做成这样，找出的是最短路  
+        reward = 0
+        state_next = action
+        if(state_next == self.des):
+            reward = 10
+        # arc = (state_current, action)  
+        # max_length = max(list(self.network.values()))  
+        # reward = max_length - self.network[arc]  # 奖励是做成这样，找出的是最短路  
         # reward = network[arc]  # 这样筛选出来的是最长路  
-    
-        state_next = action  
         return state_next, reward  
   
     def solve_SPP_with_Q_table(self):  
@@ -125,7 +136,7 @@ class Q_Learning(object):
                 print('next position: ', end='')  
     
             # 如果没有结束，则继续探索  
-            step_counter = 0  
+            step_counter = 0
             while not is_terminated:  
                 # choose next action  
                 action = self.choose_action(state_current)  
