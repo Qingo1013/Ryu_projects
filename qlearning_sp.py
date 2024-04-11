@@ -350,7 +350,7 @@ class DijkstraController(app_manager.RyuApp):
             for s,ip,op in shortest_path:
                 path_str=path_str+"--{}-{}-{}--".format(ip,s,op)
 
-            #self.logger.info("The longset path from {} to {} is {}".format(src_mac,dst_mac,path_str))
+            self.logger.info("The longset path from {} to {} is {}".format(src_mac,dst_mac,path_str))
             
             #self.logger.info("Have calculated the longest path from {} to {}".format(src_mac,dst_mac))
 
@@ -362,7 +362,7 @@ class DijkstraController(app_manager.RyuApp):
 
             # current_switch=None
             out_port=None
-            for s,_,op in shortest_path:
+            for s, _ , op in shortest_path:
                 # print(s,dpid)
                 if s==dpid:
                     out_port=op
@@ -381,17 +381,21 @@ class DijkstraController(app_manager.RyuApp):
             #the dst mac has not registered
             #self.logger.info("We have not learn the mac address {},flooding...".format(dst_mac))
             out_port=ofproto.OFPP_FLOOD
-
+        if in_port is not None:
+            self.logger.info("inort type:{}".format(type(in_port)))
+        if out_port is not None:
+            self.logger.info("outport type:{}".format(type(out_port)))
+        
         # actions= flood or some port
         actions=[parser.OFPActionOutput(out_port)]
 
         data=None
 
         if msg.buffer_id==ofproto.OFP_NO_BUFFER:
-            data=msg.data
+            data = msg.data
         
         # send the packet out to avoid packet loss
-        out=parser.OFPPacketOut(
+        out= parser.OFPPacketOut(
             datapath=datapath,
             buffer_id=msg.buffer_id,
             in_port=in_port,
