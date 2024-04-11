@@ -398,7 +398,7 @@ class DijkstraController(app_manager.RyuApp):
             actions=actions,
             data=data
         )
-        out.serialize()
+        # out.serialize()
         datapath.send_msg(out)
         
     #https://vlkan.com/blog/post/2013/08/06/sdn-discovery/
