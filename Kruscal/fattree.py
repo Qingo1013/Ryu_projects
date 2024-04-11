@@ -62,7 +62,7 @@ class MyTopo( Topo ):
             for i in range(2):
                 host = self.addHost( 'h{}'.format( count ) )
                 # self.addLink( sw1, host )
-                self.addLink(sw2, host, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
+                self.addLink(sw1, host, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
                 count += 1
 
 topos = { 'mytopo': ( lambda: MyTopo() ) }
