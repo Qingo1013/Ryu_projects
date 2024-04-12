@@ -170,7 +170,7 @@ class Q_Learning(object):
             if (episode % 10 == 0): 
                 # _, total_distance = self.solve_SPP_with_Q_table() 
                 
-                print("Episode :{},total_distance:{},total_reward:{}".format(episode,total_reward))  
+                print("Episode :{},total_reward:{}".format(episode,total_reward))  
                 print(self.Q_table, end='\n\n')  
      
  
