@@ -342,7 +342,7 @@ class DijkstraController(app_manager.RyuApp):
                 in_port,
                 final_port)
             
-            self.logger.info("The shortest path from {} to {} contains {} switches".format(src_mac,dst_mac,len(shortest_path)))
+            self.logger.info("The shortest path from {} to {} contains {} switches".format(src_switch,dst_switch,len(shortest_path)))
             
             assert len(shortest_path)>0
             
@@ -353,7 +353,7 @@ class DijkstraController(app_manager.RyuApp):
             for s,ip,op in shortest_path:
                 path_str=path_str+"--{}-{}-{}--".format(ip,s,op)
 
-            self.logger.info("The shortest path from {} to {} is {}".format(src_mac,dst_mac,path_str))
+            self.logger.info("The shortest path from {} to {} is {}".format(dst_switch,dst_switch,path_str))
             
             #self.logger.info("Have calculated the longest path from {} to {}".format(src_mac,dst_mac))
 

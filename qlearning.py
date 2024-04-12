@@ -25,7 +25,7 @@ class Q_Learning(object):
        self._epsilon = 0.9   # greedy police  
        self._learning_rate = 0.1     # learning rate  
        self._discount_factor = 0.9    # discount factor  
-       self.MAX_EPISODES = 100   # maximum episodes  
+       self.MAX_EPISODES = 50   # maximum episodes  
        self.Q_table = None
        self.org = src
        self.des = dst
@@ -125,6 +125,7 @@ class Q_Learning(object):
         self.build_Q_table()  
     
         """ Main loop to update the Q_table """  
+        total_reward = 0 
         ## training  
         for episode in range(self.MAX_EPISODES):  
             if (episode % 10 == 0):  
@@ -137,7 +138,8 @@ class Q_Learning(object):
                 print('current position: {}'.format(state_current), end='   ')  
                 print('next position: ', end='')  
     
-            # 如果没有结束，则继续探索  
+            # 如果没有结束，则继续探索 
+            
             step_counter = 0
             while not is_terminated:  
                 # choose next action  
@@ -145,7 +147,7 @@ class Q_Learning(object):
                 state_next, reward = self.get_env_feedback(state_current, action)  # take action & get next state and reward  
                 if (episode % 10 == 0):  
                     print(' {} '.format(state_next), end='')  
-    
+                total_reward += reward
                 # Update Q_table using temporal-difference (TD) method  
                 Q_predict = self.Q_table.loc[state_current, action]  
                 Q_target = 0  
@@ -164,8 +166,9 @@ class Q_Learning(object):
                 if step_counter >= 100:
                     break
     
-            if (episode % 10 == 0):  
-                print()  
+            if (episode % 10 == 0): 
+                _, total_distance = self.solve_SPP_with_Q_table() 
+                print("Episode :{},total_distance:{},total_reward:{}".format(episode,total_distance,total_reward))  
                 print(self.Q_table, end='\n\n')  
      
  
