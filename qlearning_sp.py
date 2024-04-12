@@ -69,23 +69,25 @@ class Topo(object):
         print(onepath)
 
         if src_sw==dst_sw:
-                path=[src_sw]
+            path=[src_sw]
         else:
-                path=onepath
-            
-        record=[]
-        inport=first_port
+            path=onepath
 
-            # s1 s2; s2:s3, sn-1  sn
-        for s1,s2 in zip(path[:-1],path[1:]):
-                # s1--outport-->s2
-            outport,_=self.get_adjacent(s1,s2)
-                
-            record.append((s1,inport,outport))
-            inport,_=self.get_adjacent(s2,s1)
-            
-        record.append((dst_sw,inport,last_port))
+        record=[]
         
+        if len(path)>1:
+            inport=first_port
+            # s1 s2; s2:s3, sn-1  sn
+            for s1,s2 in zip(path[:-1],path[1:]):
+                    # s1--outport-->s2
+                outport,_=self.get_adjacent(s1,s2)
+                    
+                record.append((s1,inport,outport))
+                inport,_=self.get_adjacent(s2,s1)
+                record.append((dst_sw,inport,last_port))
+        else:
+            record.append((dst_sw,inport,last_port)) 
+
         #we find a path
         # (s1,inport,outport)->(s2,inport,outport)->...->(dest_switch,inport,outport)
         return record
@@ -350,7 +352,7 @@ class DijkstraController(app_manager.RyuApp):
             for s,ip,op in shortest_path:
                 path_str=path_str+"--{}-{}-{}--".format(ip,s,op)
 
-            self.logger.info("The longset path from {} to {} is {}".format(src_mac,dst_mac,path_str))
+            self.logger.info("The shortest path from {} to {} is {}".format(src_mac,dst_mac,path_str))
             
             #self.logger.info("Have calculated the longest path from {} to {}".format(src_mac,dst_mac))
 
@@ -361,7 +363,7 @@ class DijkstraController(app_manager.RyuApp):
             self.logger.info("Configure done")
 
             # current_switch=None
-            out_port=None
+            out_port = None
             for s, _ , op in shortest_path:
                 # print(s,dpid)
                 if s==dpid:
@@ -382,7 +384,7 @@ class DijkstraController(app_manager.RyuApp):
             #self.logger.info("We have not learn the mac address {},flooding...".format(dst_mac))
             out_port=ofproto.OFPP_FLOOD
         if in_port is not None:
-            self.logger.info("inort type:{}".format(type(in_port)))
+            self.logger.info("inport type:{}".format(type(in_port)))
         if out_port is not None:
             self.logger.info("outport type:{}".format(type(out_port)))
         
