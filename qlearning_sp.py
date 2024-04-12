@@ -68,14 +68,13 @@ class Topo(object):
         print("the shortest path is: ")
         print(onepath)
 
+        record=[]
         if src_sw==dst_sw:
             path=[src_sw]
+            inport=first_port
+            record.append((dst_sw,inport,last_port)) 
         else:
             path=onepath
-
-        record=[]
-        
-        if len(path)>1:
             inport=first_port
             # s1 s2; s2:s3, sn-1  sn
             for s1,s2 in zip(path[:-1],path[1:]):
@@ -85,10 +84,6 @@ class Topo(object):
                 record.append((s1,inport,outport))
                 inport,_=self.get_adjacent(s2,s1)
             record.append((dst_sw,inport,last_port)) 
-        else:
-            inport=first_port
-            record.append((dst_sw,inport,last_port)) 
-
         #we find a path
         # (s1,inport,outport)->(s2,inport,outport)->...->(dest_switch,inport,outport)
         return record
@@ -390,7 +385,8 @@ class DijkstraController(app_manager.RyuApp):
             self.logger.info("inport:{}, type:{}".format(in_port,type(in_port)))
         if out_port is not None:
             self.logger.info("outport:{}, type:{}".format(out_port,type(out_port)))
-        
+        else:
+            return
         # actions= flood or some port
         actions=[parser.OFPActionOutput(out_port)]
 
