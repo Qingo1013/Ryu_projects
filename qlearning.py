@@ -125,14 +125,14 @@ class Q_Learning(object):
         self.build_Q_table()  
     
         """ Main loop to update the Q_table """  
-        total_reward = 0
+        
         ## training  
         for episode in range(self.MAX_EPISODES):  
             if (episode % 10 == 0):  
                 print('enter episode: {}'.format(episode), end='  ')  
     
             # initial state  
-             
+            total_reward = 0
             state_current = self.org  
             is_terminated = False  
             if (episode % 10 == 0):  
@@ -148,7 +148,6 @@ class Q_Learning(object):
                 state_next, reward = self.get_env_feedback(state_current, action)  # take action & get next state and reward  
                 if (episode % 10 == 0):  
                     print(' {} '.format(state_next), end='')  
-                total_reward += reward
                 # Update Q_table using temporal-difference (TD) method  
                 Q_predict = self.Q_table.loc[state_current, action]  
                 Q_target = 0  
@@ -160,18 +159,19 @@ class Q_Learning(object):
                     is_terminated = True   # terminate this episode  
     
                 self.Q_table.loc[state_current, action] += self._learning_rate * (Q_target - Q_predict)  # update  
-    
+                
                 state_current = state_next  # move to next state  
     
                 step_counter += 1  
                 if step_counter >= 100:
                     break
-    
-            if (episode % 10 == 0): 
+                total_reward += reward
+            # if (episode % 10 == 0): 
                 # _, total_distance = self.solve_SPP_with_Q_table() 
                 
-                print("Episode :{},total_reward:{}".format(episode,total_reward))  
+                # print("Episode :{},total_reward:{}".format(episode,total_reward))  
                 # print(self.Q_table, end='\n\n')  
+            print("Episode :{},total_reward:{}".format(episode,total_reward))
      
  
   
