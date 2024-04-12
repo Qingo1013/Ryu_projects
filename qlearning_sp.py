@@ -353,7 +353,7 @@ class DijkstraController(app_manager.RyuApp):
             for s,ip,op in shortest_path:
                 path_str=path_str+"--{}-{}-{}--".format(ip,s,op)
 
-            self.logger.info("The shortest path from {} to {} is {}".format(dst_switch,dst_switch,path_str))
+            self.logger.info("The shortest path from {} to {} is {}".format(src_switch,dst_switch,path_str))
             
             #self.logger.info("Have calculated the longest path from {} to {}".format(src_mac,dst_mac))
 
@@ -363,6 +363,8 @@ class DijkstraController(app_manager.RyuApp):
 
             self.logger.info("Configure done")
 
+
+            self.logger.info("dpid:{},srcsw:{}".format(dpid,src_switch))
             # current_switch=None
             out_port = None
             for s, _ , op in shortest_path:
@@ -385,9 +387,9 @@ class DijkstraController(app_manager.RyuApp):
             #self.logger.info("We have not learn the mac address {},flooding...".format(dst_mac))
             out_port=ofproto.OFPP_FLOOD
         if in_port is not None:
-            self.logger.info("inport type:{}".format(type(in_port)))
+            self.logger.info("inport:{}, type:{}".format(in_port,type(in_port)))
         if out_port is not None:
-            self.logger.info("outport type:{}".format(type(out_port)))
+            self.logger.info("outport:{}, type:{}".format(out_port,type(out_port)))
         
         # actions= flood or some port
         actions=[parser.OFPActionOutput(out_port)]
