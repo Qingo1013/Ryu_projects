@@ -84,8 +84,9 @@ class Topo(object):
                     
                 record.append((s1,inport,outport))
                 inport,_=self.get_adjacent(s2,s1)
-                record.append((dst_sw,inport,last_port))
+            record.append((dst_sw,inport,last_port)) 
         else:
+            inport=first_port
             record.append((dst_sw,inport,last_port)) 
 
         #we find a path
