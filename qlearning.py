@@ -25,7 +25,7 @@ class Q_Learning(object):
        self._epsilon = 0.9   # greedy police  
        self._learning_rate = 0.1     # learning rate  
        self._discount_factor = 0.9    # discount factor  
-       self.MAX_EPISODES = 60   # maximum episodes  
+       self.MAX_EPISODES = 100   # maximum episodes  
        self.Q_table = None
        self.org = src
        self.des = dst
