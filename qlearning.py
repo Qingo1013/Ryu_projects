@@ -159,7 +159,8 @@ class Q_Learning(object):
                     is_terminated = True   # terminate this episode  
     
                 self.Q_table.loc[state_current, action] += self._learning_rate * (Q_target - Q_predict)  # update  
-                
+                if is_terminated:
+                    print("Episode :{},total_reward:{}".format(episode,self.Q_table.loc[state_current, action]))
                 state_current = state_next  # move to next state  
     
                 step_counter += 1  
@@ -171,7 +172,7 @@ class Q_Learning(object):
                 
                 # print("Episode :{},total_reward:{}".format(episode,total_reward))  
                 # print(self.Q_table, end='\n\n')  
-            print("Episode :{},total_reward:{}".format(episode,total_reward))
+      
      
  
   

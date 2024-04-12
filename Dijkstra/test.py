@@ -51,7 +51,7 @@ MAX_action_num = len(Nodes)   # 因为不是全连接网络，因此我们取最
 _epsilon = 0.9   # greedy police  
 _learning_rate = 0.1     # learning rate  
 _discount_factor = 0.9    # discount factor  
-MAX_EPISODES = 20   # maximum episodes  
+MAX_EPISODES = 100   # maximum episodes  
   
   
 """ Generate Q-table """  
@@ -158,14 +158,14 @@ def Q_learning_algo():
                 is_terminated = True   # terminate this episode  
   
             Q_table.loc[state_current, action] += _learning_rate * (Q_target - Q_predict)  # update  
-            # if is_terminated:
-            #     print("reward:{}".format(Q_table.loc[state_current, action]))
+            if is_terminated:
+                print("reward:{}".format(Q_table.loc[state_current, action]))
             state_current = state_next  # move to next state  
 
             total_reward += reward
             # _discount_factor_t *= _discount_factor
             step_counter += 1  
-        print("reward:{}".format(total_reward))
+        # print("reward:{}".format(total_reward))
         if (episode % 10 == 0):  
             print()  
             print(Q_table, end='\n\n')  
