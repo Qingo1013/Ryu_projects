@@ -22,8 +22,8 @@ class Q_Learning(object):
         #    self._actions = 
        self.__get_actions()   
        self.MAX_action_num = self._state_num
-       self._epsilon = 0.9   # greedy police  
-       self._learning_rate = 0.1     # learning rate  
+       self._epsilon = 0.3   # greedy police  
+       self._learning_rate = 0.3     # learning rate  
        self._discount_factor = 0.9    # discount factor  
        self.MAX_EPISODES = 100   # maximum episodes  
        self.Q_table = None
