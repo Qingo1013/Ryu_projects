@@ -45,15 +45,15 @@ class MyTopo( Topo ):
         for i in range( L1 ):
             sw1 = c[i]
             for sw2 in a[int(i/2)::int(L1/2)]:
-                # self.addLink(sw2, sw1, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
-                self.addLink( sw2, sw1 )
+                self.addLink(sw2, sw1, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
+                # self.addLink( sw2, sw1 )
 
         # add links between aggregation and edge ovs
         for i in range( 0, L2, 2 ):
             for sw1 in a[int(i):int(i+2)]:
                 for sw2 in e[int(i):int(i+2)]:
-                    self.addLink( sw2, sw1 )
-                    # self.addLink(sw2, sw1, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
+                    # self.addLink( sw2, sw1 )
+                    self.addLink(sw2, sw1, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
 
 
         #add hosts and its links with edge ovs
@@ -61,8 +61,8 @@ class MyTopo( Topo ):
         for sw1 in e:
             for i in range(2):
                 host = self.addHost( 'h{}'.format( count ) )
-                self.addLink( sw1, host )
-                # self.addLink(sw1, host, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
+                # self.addLink( sw1, host )
+                self.addLink(sw1, host, bw=1, delay='5ms', loss=0, max_queue_size=1000, use_htb=True)
                 count += 1
 
 topos = { 'mytopo': ( lambda: MyTopo() ) }

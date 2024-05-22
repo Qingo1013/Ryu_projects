@@ -58,8 +58,8 @@ class Topo(object):
         self.adjacent[(s1,s2)]=(port,weight)
 
     def shortest_path(self,src_sw,dst_sw,first_port,last_port):
-        self.logger.info("topo calculate the shortest path from ---{}-{}-------{}-{}".format(first_port,src_sw,dst_sw,last_port))
-        self.logger.info("there is {} swithes".format(len(self.switches)))
+        print("topo calculate the shortest path from ---{}-{}-------{}-{}".format(first_port,src_sw,dst_sw,last_port))
+        print("there is {} swithes".format(len(self.switches)))
         
         
         q = Q_Learning(self.switches, self.adjacent, src_sw, dst_sw)
@@ -337,7 +337,7 @@ class DijkstraController(app_manager.RyuApp):
                 in_port,
                 final_port)
             
-            self.logger.info("The shortest path from {} to {} contains {} switches".format(src_switch,dst_switch,len(shortest_path)))
+            print("The shortest path from {} to {} contains {} switches".format(src_switch,dst_switch,len(shortest_path)))
             
             assert len(shortest_path)>0
             
@@ -348,7 +348,7 @@ class DijkstraController(app_manager.RyuApp):
             for s,ip,op in shortest_path:
                 path_str=path_str+"--{}-{}-{}--".format(ip,s,op)
 
-            self.logger.info("The shortest path from {} to {} is {}".format(src_switch,dst_switch,path_str))
+            print("The shortest path from {} to {} is {}".format(src_switch,dst_switch,path_str))
             
             #self.logger.info("Have calculated the longest path from {} to {}".format(src_mac,dst_mac))
 
@@ -356,10 +356,10 @@ class DijkstraController(app_manager.RyuApp):
 
             self.configure_path(shortest_path,event,src_mac,dst_mac)
 
-            self.logger.info("Configure done")
+            print("Configure done")
 
 
-            self.logger.info("dpid:{},srcsw:{}".format(dpid,src_switch))
+            print("dpid:{},srcsw:{}".format(dpid,src_switch))
             # current_switch=None
             out_port = None
             for s, _ , op in shortest_path:
@@ -382,9 +382,9 @@ class DijkstraController(app_manager.RyuApp):
             #self.logger.info("We have not learn the mac address {},flooding...".format(dst_mac))
             out_port=ofproto.OFPP_FLOOD
         if in_port is not None:
-            self.logger.info("inport:{}, type:{}".format(in_port,type(in_port)))
+            print("inport:{}, type:{}".format(in_port,type(in_port)))
         if out_port is not None:
-            self.logger.info("outport:{}, type:{}".format(out_port,type(out_port)))
+            print("outport:{}, type:{}".format(out_port,type(out_port)))
         else:
             return
         # actions= flood or some port
